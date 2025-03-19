@@ -6,8 +6,8 @@ This is a repository about a virtual assistant connects via ChatGPT.
 
   ### Backend:
     Python
-  ###Frontend:
+  ### Frontend:
     Qt Designer
-  ###Dependences:
+  ### Dependences:
   openai
   
