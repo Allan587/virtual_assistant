@@ -10,4 +10,4 @@ This is a repository about a virtual assistant connects via ChatGPT.
     Qt Designer
   ### Dependences:
   openai
-  
+  json  
