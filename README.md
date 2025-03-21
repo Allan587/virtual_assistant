@@ -9,5 +9,5 @@ This is a repository about a virtual assistant connects via ChatGPT.
   ### Frontend:
     Qt Designer
   ### Dependences:
-  openai
+  openai,
   json  
