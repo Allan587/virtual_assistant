@@ -1,17 +1,27 @@
 import json
+import os
 
 def user_management():
+    # Ask information from the user
     users = str(input("Ingrese el nombre de usuario: "))
     passw = str(input("Ingrese su contraseña: "))
     
-    data = {"user": users, "password": passw}
+    data = {"user": users, "password": passw} # create data to save in dictionary format
     
-    with open (f"{users}_conversation", "w", encoding="utf-8") as file:
-        json.dump(data, file, indent= 4)
+    if not os.path.exists('conversations'): # Check if the 'conversations' folder exists, if not, create it
+        os.makedirs('conversations')
     
-def read_conversations(users):
-    
-    with open("datos.json", "r", encoding="utf-8") as file:
-        datos = json.load(f'{users}_conversation')
+    file_path = "conversations/users.json" # Path to the users' file
 
-user_management()
+    if os.path.exists(file_path): # Check if the file exists and load existing users
+        with open(file_path, "r", encoding="utf-8") as file:
+            existing_data = json.load(file) # Read the existing users data
+    else:
+        existing_data = [] # If no existing file, initialize an empty list for users
+    
+    existing_data.append(data) # Append the new user data to the existing list
+    
+    # Save all users back to the file
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(existing_data, file, indent=4)
+
