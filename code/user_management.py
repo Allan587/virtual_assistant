@@ -64,9 +64,8 @@ def sign_up(users:str, passw:str)->str:
         return
     
     existing_data.append(data) # Append the new user data to the existing list
-    
-    # Save all users back to the file
-    with open(file_path, "w", encoding="utf-8") as file:
+
+    with open(file_path, "w", encoding="utf-8") as file: # Save all users back to the file
         json.dump(existing_data, file, indent=4)
         print(f"Usuario '{users}' registrado con éxito.")
 
