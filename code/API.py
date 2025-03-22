@@ -1,5 +1,6 @@
 import requests
 import json
+from user_management import *
 
 class VirtualAssistant:
     def __init__(self):
@@ -8,8 +9,8 @@ class VirtualAssistant:
             {"role": "system", "content": "Eres un asistente útil y conversacional."}
         ]
 
-    def chat_with_php(self, mensaje: str) -> str:
-        self.conversacion.append({"role": "user", "content": mensaje})
+    def chat_with_php(self, message: str) -> str:
+        self.conversacion.append({"role": "user", "content": message})
         
         try:
             respuesta = requests.post(self.URL_PHP, json={"messages": self.conversacion})
@@ -28,15 +29,10 @@ if __name__ == "__main__":
     print("Bienvenido al chat con ChatGPT (vía PHP). Escribe 'salir' para terminar.")
     
     while True:
-        mensaje = input("Tú: ")  
-        if mensaje.lower() in ["salir", "exit", "quit"]:
+        message = input("Tú: ")  
+        if message.lower() in ["salir", "exit", "quit"]:
             print("ChatGPT: ¡Hasta luego!")
             break 
         
-        respuesta = assistant.chat_with_php(mensaje)
+        respuesta = assistant.chat_with_php(message)
         print(f"ChatGPT: {respuesta}")
-
-#Constraint: users whith the same name. Solution, check whether the username was created and restict its use.
-#Make use of POO to connect frontend to backend and make it readable.
-#Research about python encryption libraries.
-#Add date time as a reference of the conversation

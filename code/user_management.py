@@ -32,5 +32,3 @@ def users_conversation():
 if __name__ == "__main__":
     users = str(input("Ingrese el nombre de usuario: "))
     passw = str(input("Ingrese su contraseña: "))
-    sing_in(users, passw)
-    
