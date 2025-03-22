@@ -18,9 +18,8 @@ def sing_in(users:str, passw:str)->str:
         existing_data = [] # If no existing file, initialize an empty list for users
     
     existing_data.append(data) # Append the new user data to the existing list
-    
-    # Save all users back to the file
-    with open(file_path, "w", encoding="utf-8") as file:
+
+    with open(file_path, "w", encoding="utf-8") as file: # Save all users back to the file
         json.dump(existing_data, file, indent=4)
 
 def users_conversation():
