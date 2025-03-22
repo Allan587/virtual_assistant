@@ -38,5 +38,3 @@ def save_conversations(users:str, message:str, respuesta:str)->str : #Funtion th
 def read_conversation(users:str)-> str:
     file_path = (f'conversations/{users}_conversation')
     with open(file_path, 'r', encoding='utf-8'):
-        
-        
