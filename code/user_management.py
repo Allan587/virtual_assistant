@@ -2,33 +2,28 @@ import json
 import os
 import bcrypt
 from datetime import *
-
-def login(users: str, passw: str):
+  
+def login(users: str, passw: str)->str:
     file_path = "users/users.json" #Path where users are stored
 
-    #Check if the file exists
-    if not os.path.exists(file_path):
+    if not os.path.exists(file_path): #Check if the file exists
         print("No hay usuarios registrados.")
         return
     
-    #Load data from the JSON file
-    with open(file_path, "r", encoding="utf-8") as file:
+    with open(file_path, "r", encoding="utf-8") as file: #Load data from the JSON file
         existing_data = json.load(file)
 
-    # Search for the user in the database
-    user_data = next((user for user in existing_data if user["user"] == users), None)
+    user_data = next((user for user in existing_data if user["user"] == users), None) # Search for the user in the database
 
-    # If the user does not exist, display an error message
-    if user_data is None:
+    if user_data is None: # If the user does not exist, display an error message
         print("Usuario no encontrado.")
         return
 
-    # Compare the entered password with the stored (encrypted) password
-    stored_hashed_password = user_data["password"].encode('utf-8')  # We convert to bytes
+    stored_hashed_password = user_data["password"].encode('utf-8')  # Compare the entered password with the stored (encrypted) password and convet to bytes
 
-    #Compare the entered password with the stored one
-    if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password):
-        print(f"Bienvenido, {users}!") #correct password message
+    if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password): #Compare the entered password with the stored one
+        from API import interact_with_chat
+        interact_with_chat()
     else:
         print("Contraseña incorrecta.")#incorrect password message
 
@@ -47,7 +42,7 @@ def sign_up(users:str, passw:str)->str:
     hashed_password = bcrypt.hashpw(passw.encode('utf-8'), salt)  # Encrypt the password
 
     data = {"user": users, "password": hashed_password.decode('utf-8')} # create data to save in dictionary format
-    
+
     if not os.path.exists('users'): # Check if the 'users' folder exists, if not, create it
         os.makedirs('users')
     
@@ -67,20 +62,12 @@ def sign_up(users:str, passw:str)->str:
 
     with open(file_path, "w", encoding="utf-8") as file: # Save all users back to the file
         json.dump(existing_data, file, indent=4)
-        print(f"Usuario '{users}' registrado con éxito.")
-
 
 def select():
     while True:#A while loop is started to execute the selection until an option is chosen.
 
         #op is the user's choice
-        op = int(input("\nBienvenido a tu asistente virtual\n"
-                           "1. Inicia sesión con tu usuario\n"
-                           "2. Crea un nuevo usuario\n"
-                           "3. Salir\n"
-                           "Opción: "))
-            
-        
+        op = int(input("\nBienvenido a tu asistente virtual\n" "1. Inicia sesión con tu usuario\n" "2. Crea un nuevo usuario\n" "3. Salir\n" "Opción: "))
 
         if op == 1:#If you selected 1, the "def login" will start
             users = str(input("Ingrese el nombre de usuario: "))
@@ -98,4 +85,26 @@ def select():
 
         else:#If you select another option, an error message appears and you return to your selection.
             print("La opcion seleccionada no existe o esta mal escrita\n\nSi gusta seleccionar una opsion solo coloque el numero de la opcion\nOpciones: 1 , 2 , 3 ")
-select()
+def user_data():
+    users = str(input('Ingrese su usuario: ')); passw = str(input('Ingrese su contraseña: '))
+    return users, passw
+
+def select():
+    while True:
+        op = int(input("\nBienvenido a tu asistente virtual\n" "1. Inicia sesión con tu usuario\n" "2. Crea un nuevo usuario\n" "3. Salir\n" "Opción: "))
+        
+        if op == 1:#If you selected 1, the "def login" will start
+            users, passw = user_data()
+            login(users, passw)
+
+        if op == 2:#If you selected 2, the "def login" will start
+            users, passw = user_data()
+            sign_up(users, passw)
+
+        if op == 3 :#If you selected 3, the program stops
+            print("Gracias por usar el asistente virtual, tenga un buen dia. ")
+            break
+
+        else:#If you select another option, an error message appears and you return to your selection.
+            print("La opcion seleccionada no existe o esta mal escrita\n\nSi gusta seleccionar una opsion solo coloque el numero de la opcion\nOpciones: 1 , 2 , 3 ")
+

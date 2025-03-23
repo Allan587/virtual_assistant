@@ -1,6 +1,7 @@
 import requests
-from history_management import *
+from history_management import save_conversations
 import shutil
+from user_management import *
 
 class VirtualAssistant:
     def __init__(self):
@@ -8,7 +9,6 @@ class VirtualAssistant:
         self.conversacion = [
             {"role": "system", "content": "Eres un asistente útil y conversacional."}
         ]
-
     def chat_with_php(self, message: str) -> str: #function that allows you to chat with chatGPT
         self.message = message
         self.conversacion.append({"role": "user", "content": self.message}) #Receive a message that will be answered by chatGPT
@@ -22,13 +22,14 @@ class VirtualAssistant:
             return self.mensaje_respuesta #Return the response
         
         except Exception as e:
-            return f"Error al conectar con el servidor: {e}" #Print a an error in case of error
 
-if __name__ == "__main__":
-    assistant = VirtualAssistant()
-    users = str(input("Ingrese su usuario: "))
+            return f"Error al conectar con el servidor: {e}" #Print a an error in case of error
+        
+def interact_with_chat():
     terminal_width = shutil.get_terminal_size().columns
-    
+    user_name, user_passw = user_data()
+    assistant = VirtualAssistant()
+
     while True:
         message = input("Tú: ")  
         if message.lower() in ["salir", "exit", "quit"]:
@@ -39,4 +40,7 @@ if __name__ == "__main__":
         respuesta = assistant.chat_with_php(message)
         text=(f"{respuesta} :ChatGPT")
         print(text.rjust(terminal_width))
-        save_conversations(users, message, respuesta)
+        save_conversations(user_name, message, respuesta)
+
+if __name__ == "__main__":
+    select()
