@@ -19,12 +19,12 @@ def login(users: str, passw: str)->str:
         print("Usuario no encontrado.")
         return
 
-    stored_hashed_password = user_data["password"].encode('utf-8')  # Compare the entered password with the stored (encrypted) password and convet to bytes
+    stored_hashed_password = user_data["password"]  # Compare the entered password with the stored (encrypted) password and convet to bytes
 
-    if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password): #Compare the entered password with the stored one
+    if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password.encode('utf-8')): #Compare the entered password with the stored one
         print(f'Bienvenido {users}')
         from API import interact_with_chat
-        interact_with_chat()
+        interact_with_chat(users)
     else:
         print("Contraseña incorrecta.")#incorrect password message
 
