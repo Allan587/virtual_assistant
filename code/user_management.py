@@ -22,6 +22,7 @@ def login(users: str, passw: str)->str:
     stored_hashed_password = user_data["password"].encode('utf-8')  # Compare the entered password with the stored (encrypted) password and convet to bytes
 
     if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password): #Compare the entered password with the stored one
+        print(f'Bienvenido {users}')
         from API import interact_with_chat
         interact_with_chat()
     else:
@@ -63,28 +64,6 @@ def sign_up(users:str, passw:str)->str:
     with open(file_path, "w", encoding="utf-8") as file: # Save all users back to the file
         json.dump(existing_data, file, indent=4)
 
-def select():
-    while True:#A while loop is started to execute the selection until an option is chosen.
-
-        #op is the user's choice
-        op = int(input("\nBienvenido a tu asistente virtual\n" "1. Inicia sesión con tu usuario\n" "2. Crea un nuevo usuario\n" "3. Salir\n" "Opción: "))
-
-        if op == 1:#If you selected 1, the "def login" will start
-            users = str(input("Ingrese el nombre de usuario: "))
-            passw = str(input("Ingrese su contraseña: "))
-            login(users, passw)
-        
-        elif op == 2:#If you selected 2, the "def login" will start
-            users = str(input("Ingrese el nombre de usuario: "))
-            passw = str(input("Ingrese su contraseña: "))
-            sign_up(users, passw)
-
-        elif op == 3:#If you selected 3, the program stops
-            print("Gracias por usar el asistente virtual, tenga un buem dia. ")
-            break
-
-        else:#If you select another option, an error message appears and you return to your selection.
-            print("La opcion seleccionada no existe o esta mal escrita\n\nSi gusta seleccionar una opsion solo coloque el numero de la opcion\nOpciones: 1 , 2 , 3 ")
 def user_data():
     users = str(input('Ingrese su usuario: ')); passw = str(input('Ingrese su contraseña: '))
     return users, passw
@@ -96,10 +75,12 @@ def select():
         if op == 1:#If you selected 1, the "def login" will start
             users, passw = user_data()
             login(users, passw)
-
-        if op == 2:#If you selected 2, the "def login" will start
+            break
+        
+        if op == 2:#If you sele
             users, passw = user_data()
             sign_up(users, passw)
+            break
 
         if op == 3 :#If you selected 3, the program stops
             print("Gracias por usar el asistente virtual, tenga un buen dia. ")
@@ -107,4 +88,3 @@ def select():
 
         else:#If you select another option, an error message appears and you return to your selection.
             print("La opcion seleccionada no existe o esta mal escrita\n\nSi gusta seleccionar una opsion solo coloque el numero de la opcion\nOpciones: 1 , 2 , 3 ")
-
