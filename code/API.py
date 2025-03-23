@@ -25,9 +25,8 @@ class VirtualAssistant:
 
             return f"Error al conectar con el servidor: {e}" #Print a an error in case of error
         
-def interact_with_chat():
+def interact_with_chat(users):
     terminal_width = shutil.get_terminal_size().columns
-    user_name, user_passw = user_data()
     assistant = VirtualAssistant()
 
     while True:
@@ -40,7 +39,7 @@ def interact_with_chat():
         respuesta = assistant.chat_with_php(message)
         text=(f"{respuesta} :ChatGPT")
         print(text.rjust(terminal_width))
-        save_conversations(user_name, message, respuesta)
+        save_conversations(users, message, respuesta)
 
 if __name__ == "__main__":
     select()
