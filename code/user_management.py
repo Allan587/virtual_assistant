@@ -16,17 +16,28 @@ def login(users: str, passw: str)->str:
     user_data = next((user for user in existing_data if user["user"] == users), None) # Search for the user in the database
 
     if user_data is None: # If the user does not exist, display an error message
-        print("Usuario no encontrado.")
+        print("Usuario no encontrado.\nVolviendo al menú principal...")
+        select()
         return
 
-    stored_hashed_password = user_data["password"]  # Compare the entered password with the stored (encrypted) password and convet to bytes
+    stored_hashed_password = user_data["password"]  # Compare the entered password with the stored (encrypted) password and convet to byte
 
-    if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password.encode('utf-8')): #Compare the entered password with the stored one
-        print(f'Bienvenido {users}')
-        from API import interact_with_chat
-        interact_with_chat(users)
-    else:
-        print("Contraseña incorrecta.")#incorrect password message
+    while True:
+        if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password.encode('utf-8')): #Compare the entered password with the stored one
+            print(f'Bienvenido {users}')
+            from API import interact_with_chat
+            interact_with_chat(users)
+            return
+        else:
+            print("Contraseña incorrecta.")  # Error mensage
+            option = input("¿Quieres intentar nuevamente? (s/n): ").strip().lower()
+
+            if option == 's':  # If you choose to continue, it will ask for the password again
+                passw = input("Ingrese su contraseña nuevamente: ")
+            else:  # If you choose to exit, break the loop and terminate the function
+                print("Volviendo al menú principal...")
+                select()
+                return
 
 def sign_up(users:str, passw:str)->str:
 
@@ -56,13 +67,16 @@ def sign_up(users:str, passw:str)->str:
         existing_data = [] # If no existing file, initialize an empty list for users
     
     if any(user["user"] == users for user in existing_data):
-        print(f"El usuario '{users}' ya está registrado.")
+        print(f"El usuario '{users}' ya está registrado.\nVolviendo al menú principal...")
+        select()
         return
     
     existing_data.append(data) # Append the new user data to the existing list
 
     with open(file_path, "w", encoding="utf-8") as file: # Save all users back to the file
         json.dump(existing_data, file, indent=4)
+    print("El usuario a sido creado con exito.\nVolviendo al menú principal...")
+    select()
 
 def user_data():
     users = str(input('Ingrese su usuario: ')); passw = str(input('Ingrese su contraseña: '))
