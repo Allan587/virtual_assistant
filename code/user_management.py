@@ -2,6 +2,7 @@ import json
 import os
 import bcrypt
 from datetime import *
+from history_management import read_conversation
   
 def login(users: str, passw: str)->str:
     file_path = "users/users.json" #Path where users are stored
@@ -84,7 +85,7 @@ def user_data(): #Take username and password from the users
 
 def select(): #Function that allows you to select the process to be performed
     while True:
-        op = int(input("\nBienvenido a tu asistente virtual\n" "1. Inicia sesión con tu usuario\n" "2. Crea un nuevo usuario\n" "3. Salir\n" "Opción: "))
+        op = int(input("\nBienvenido a tu asistente virtual\n" "1. Inicia sesión con tu usuario\n" "2. Crea un nuevo usuario\n" "3. Para acceder a su historial\n" "4. Salir\n" "Opción: "))
         
         if op == 1:#If you selected 1, the "def login" will start
             users, passw = user_data()
@@ -97,8 +98,13 @@ def select(): #Function that allows you to select the process to be performed
             break
 
         if op == 3 :#If you selected 3, the program stops
+            users, passw = user_data()
+            read_conversation(users)
+            break
+        
+        if op == 4 :#If you selected 3, the program stops
             print("Gracias por usar el asistente virtual, tenga un buen dia. ")
             break
-
+        
         else:#If you select another option, an error message appears and you return to your selection.
-            print("La opcion seleccionada no existe o esta mal escrita\n\nSi gusta seleccionar una opsion solo coloque el numero de la opcion\nOpciones: 1 , 2 , 3 ")
+            print(f"La opcion: {op} no existe\n\nSi gusta seleccionar una opción solo coloque el numero de la opcion\nOpciones: 1 , 2 , 3, 4")
