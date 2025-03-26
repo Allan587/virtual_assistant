@@ -32,7 +32,7 @@ def save_conversations(users:str, message:str, respuesta:str)->str : #Funtion th
             json.dump(existing_data, file, indent=4)
         
 def read_conversation(users:str)-> str:
-    file_path = (f'conversations/{users}_conversation')
+    file_path = (f'conversations/{users}_conversation.json')
     with open(file_path, 'r', encoding='utf-8'):
         if not os.path.exists(file_path):
             return "No conversation history found for this user."
