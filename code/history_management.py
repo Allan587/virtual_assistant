@@ -14,12 +14,8 @@ def save_conversations(users:str, message:str, respuesta:str)->str : #Funtion th
     
         if not os.path.exists('conversations'): # Check if the 'conversations' folder exists, if not, create it
             os.makedirs('conversations')
-            
-        user_folder = f'conversations/{users}_conversation' #Check if the 'user' folder exists, if not, create it
-        if not os.path.exists(user_folder):
-            os.makedirs(user_folder)
         
-        json_file_path = f'{user_folder}/{current_date}_conversation.json' # Si el archivo no existe, crearlo con una estructura inicial
+        json_file_path = f'conversations/{users}_conversation.json' # Si el archivo no existe, crearlo con una estructura inicial
         if not os.path.exists(json_file_path):
             with open(json_file_path, 'w', encoding='utf-8') as f:
                 json.dump({"user": users, "date": current_date, "messages": []}, f, indent=4)
