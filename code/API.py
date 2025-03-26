@@ -1,7 +1,7 @@
 import requests
 from history_management import save_conversations
 import shutil
-from user_management import *
+from user_management import select
 
 class VirtualAssistant:
     def __init__(self):
@@ -33,7 +33,8 @@ def interact_with_chat(users): #function that allow you to talk with chatbot
         message = input("Tú: ")  
         if message.lower() in ["salir", "exit", "quit"]:
             text=("¡Hasta luego! :ChatGPT")
-            print(text.rjust(terminal_width))    
+            print(text.rjust(terminal_width))
+            select()
             break 
         
         respuesta = assistant.chat_with_php(message)
