@@ -78,11 +78,11 @@ def sign_up(users:str, passw:str)->str:
     print("El usuario a sido creado con exito.\nVolviendo al menú principal...")
     select()
 
-def user_data():
-    users = str(input('Ingrese su usuario: ')); passw = str(input('Ingrese su contraseña: '))
+def user_data(): #Take username and password from the users
+    users = str(input('Ingrese su usuario: ')); passw = str(input('Ingrese su contraseña: ')) #Contains username and password
     return users, passw
 
-def select():
+def select(): #Function that allows you to select the process to be performed
     while True:
         op = int(input("\nBienvenido a tu asistente virtual\n" "1. Inicia sesión con tu usuario\n" "2. Crea un nuevo usuario\n" "3. Salir\n" "Opción: "))
         

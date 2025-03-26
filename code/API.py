@@ -25,8 +25,8 @@ class VirtualAssistant:
 
             return f"Error al conectar con el servidor: {e}" #Print a an error in case of error
         
-def interact_with_chat(users):
-    terminal_width = shutil.get_terminal_size().columns
+def interact_with_chat(users): #function that allow you to talk with chatbot
+    terminal_width = shutil.get_terminal_size().columns #Library that allows you to align text to the screen right side
     assistant = VirtualAssistant()
 
     while True:
