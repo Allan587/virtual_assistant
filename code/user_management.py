@@ -2,7 +2,6 @@ import json
 import os
 import bcrypt
 from datetime import *
-
 from history_management import read_conversation
   
 def login(users: str, passw: str, op:int)->str:
@@ -43,7 +42,6 @@ def login(users: str, passw: str, op:int)->str:
         else:
             print("Contraseña incorrecta.")
             option = input("¿Quieres intentar nuevamente? (s/n): ").strip().lower()
-
             if option == 's':
                 passw = input("Ingrese su contraseña nuevamente: ")
             else:  
@@ -73,6 +71,9 @@ def sign_up(users:str, passw:str)->str:
     data = {"user": users, "password": hashed_password.decode('utf-8')} 
 
     if not os.path.exists('users'): 
+    data = {"user": users, "password": hashed_password.decode('utf-8')} # create data to save in dictionary format
+
+    if not os.path.exists('users'): # Check if the 'users' folder exists, if not, create it
         os.makedirs('users')
     
     file_path = "users/users.json"
@@ -84,7 +85,8 @@ def sign_up(users:str, passw:str)->str:
         existing_data = []
     
     if any(user["user"] == users for user in existing_data):
-        print(f"El usuario '{users}' ya está registrado.")
+        print(f"El usuario '{users}' ya está registrado.\nVolviendo al menú principal...")
+        select()
         return
     
     existing_data.append(data) 
@@ -98,8 +100,7 @@ def user_data():
 
     Returns:
         str: username and password to compare with the one stored in the json file or create a new one
-    """
-    
+    """ 
     users = str(input('Ingrese su usuario: ')); passw = str(input('Ingrese su contraseña: ')) 
     return users, passw
 
@@ -126,3 +127,5 @@ def select():
         
         else:
             print("La opcion seleccionada no existe o esta mal escrita\n\nSi gusta seleccionar una opsion solo coloque el numero de la opcion\nOpciones: 1 , 2 , 3 ")
+    print("El usuario a sido creado con exito.\nVolviendo al menú principal...")
+    select()

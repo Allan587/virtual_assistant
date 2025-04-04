@@ -19,7 +19,6 @@ def save_conversations(users:str, message:str, respuesta:str)->str:
             "user": f"({current_time}) Tú: {message}",
             "chatbot": f"({current_time}) chatGPT: {respuesta}"
             } 
-    
     if not os.path.exists('conversations'):
         os.makedirs('conversations')
         
