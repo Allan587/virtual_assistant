@@ -42,10 +42,16 @@ def interact_with_chat(users):
     assistant = VirtualAssistant()
     while True:
         message = input("Tú: ")  
+        if message.lower() in ["resumir historial","resumen","summary"]:
+            from history_management import summarize_conversations
+            resumen = summarize_conversations(users)
+            print(resumen)
+            continue
         if message.lower() in ["salir", "exit", "quit"]:
             text=("¡Hasta luego! :ChatGPT")
             print(text.rjust(terminal_width))
-            select()
+            from user_management import user_interface
+            user_interface(users)
             break 
 
         respuesta = assistant.chat_with_php(message)

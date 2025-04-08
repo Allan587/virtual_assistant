@@ -2,8 +2,33 @@ import json
 import os
 import bcrypt
 from datetime import *
-from history_management import read_conversation
   
+def user_interface(users):
+    Option=int(input("Seleccione la opcion que quiere utilozar\n\n1. Iniciar chat\n2. Ver historial de chats\n3. Palabras clave\n4. Comandos del chat\n(comandos para usar funciones internas del chat)\n5.Salir de la cuenta\n\nOpcion: "))
+    if Option==1:
+        from API import interact_with_chat as chat
+        chat(users)
+        user_interface()
+    elif Option==2:
+        from history_management import read_conversation as read
+        print(read(users))
+        user_interface()
+    elif Option==3:
+        from history_management import keywords as key
+        key()
+        user_interface()
+    elif Option==4:
+        print("Conandos del chat:\nsalir/exit/quit:[Salir del chat]\nresumir historial/resumen/summary:[muestra un historial de las combersaciones anteriores]")
+        user_interface()
+    elif Option==5:
+        print("Saliendo de la cuenta......")
+        select()
+    else:
+        print("La opcion seleccionada no existe\nPor favor seleccione una de la opciones dadas\n\n")
+        user_interface()
+    
+def history_summary():
+    user_data
 def login(users: str, passw: str, op:int)->str:
     """User login
 
@@ -35,8 +60,7 @@ def login(users: str, passw: str, op:int)->str:
     while True:
         if bcrypt.checkpw(passw.encode('utf-8'), stored_hashed_password.encode('utf-8')): 
             print(f'Bienvenido {users}')
-            from API import interact_with_chat
-            interact_with_chat(users)
+            user_interface(users)
             select()
             break
         else:
@@ -71,7 +95,7 @@ def sign_up(users:str, passw:str)->str:
     data = {"user": users, "password": hashed_password.decode('utf-8')} 
 
     if not os.path.exists('users'): 
-    data = {"user": users, "password": hashed_password.decode('utf-8')} # create data to save in dictionary format
+        data = {"user": users, "password": hashed_password.decode('utf-8')} # create data to save in dictionary format
 
     if not os.path.exists('users'): # Check if the 'users' folder exists, if not, create it
         os.makedirs('users')
